@@ -1,0 +1,35 @@
+[build-system]
+requires = ["poetry-core>=1.2.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "dwh-dags"
+version = "0.0.1"
+description = ""
+authors = [
+    "Jorit Studer <jorit.studer@gmail.com>"
+]
+readme = "README.md"
+
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "^1.5"
+hlsscraper = "^0.0.1"
+numpy = "^1.23.5"
+flair = "^0.11.3"
+googlemaps = "^4.7.3"
+
+[tool.poetry.dev-dependencies]
+black = "^22.10.0"
+flake8 = "^5.0.4"
+isort = "^5.10.1"
+mypy = "^0.982"
+pre-commit = "^2.20.0"
+pytest = "^7.1.3"
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.16.1"
+
+[tool.isort]
+profile = "black"

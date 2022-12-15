@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+hls_dump/
+data/
+hist-hub.log
+scraper.log
+hls_people.csv
