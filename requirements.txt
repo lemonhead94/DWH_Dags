@@ -1,0 +1,5 @@
+pandas==1.5
+hlsscraper==0.0.1
+numpy==1.23.5
+googlemaps==4.7.3
+flair==0.11.3
