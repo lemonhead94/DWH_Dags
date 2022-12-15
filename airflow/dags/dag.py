@@ -9,7 +9,9 @@ from hls import (
     flair_tagger,
     get_hist_hub_entries,
     gmaps_geocode,
+    push_to_postgres,
     scrape_hls,
+    update_mv,
 )
 
 from airflow.models import DAG
@@ -46,6 +48,14 @@ with DAG(
     gmaps_task = PythonOperator(
         task_id="gmaps_task", python_callable=partial(gmaps_geocode, config=CONFIG)
     )
+    push_to_postgres_task = PythonOperator(
+        task_id="push_to_postgres_task",
+        python_callable=partial(push_to_postgres, config=CONFIG),
+    )
+    update_mv_task = PythonOperator(
+        task_id="update_mv_task",
+        python_callable=partial(update_mv, config=CONFIG),
+    )
 
     (
         scrape_hls_task
@@ -54,4 +64,6 @@ with DAG(
         >> flair_tagger_task
         >> clean_flair_task
         >> gmaps_task
+        >> push_to_postgres_task
+        >> update_mv_task
     )

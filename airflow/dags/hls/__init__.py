@@ -1,3 +1,4 @@
+from hls.data_base import push_to_postgres, update_mv
 from hls.flair_cleaning import clean_flair
 from hls.gmaps import gmaps_geocode
 from hls.hhb_aggregation import get_hist_hub_entries
@@ -12,4 +13,6 @@ __all__ = [
     "flair_tagger",
     "clean_flair",
     "gmaps_geocode",
+    "push_to_postgres",
+    "update_mv",
 ]
