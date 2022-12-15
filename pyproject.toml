@@ -17,8 +17,9 @@ python = "^3.9"
 pandas = "^1.5"
 hlsscraper = "^0.0.1"
 numpy = "^1.23.5"
-flair = "^0.11.3"
 googlemaps = "^4.7.3"
+flair = "^0.11.3"
+apache-airflow = "^2.5.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.10.0"

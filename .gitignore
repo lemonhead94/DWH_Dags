@@ -133,3 +133,7 @@ data/
 hist-hub.log
 scraper.log
 hls_people.csv
+airflow/airflow.cfg
+airflow/airflow.db
+airflow/webserver_config.py
+airflow/logs
