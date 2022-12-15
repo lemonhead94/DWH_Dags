@@ -1,3 +1,4 @@
+from hls.clean_up_temp import clean_up_temp
 from hls.data_base import push_to_postgres, update_mv
 from hls.flair_cleaning import clean_flair
 from hls.gmaps import gmaps_geocode
@@ -15,4 +16,5 @@ __all__ = [
     "gmaps_geocode",
     "push_to_postgres",
     "update_mv",
+    "clean_up_temp",
 ]

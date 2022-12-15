@@ -5,6 +5,28 @@ import pandas as pd
 import requests
 from hls.utility_logging import log_exception, setup_logging_to_file
 
+COLUMNS = [
+    "HLS_ID",
+    "HLS_URL",
+    "first_name",
+    "last_name",
+    "birth_date",
+    "death_date",
+    "text",
+    "published",
+    "author",
+    "translator",
+    "hhb_ids",
+    "hhb_forename",
+    "hhb_surname",
+    "hhb_sex",
+    "hhb_birth_date",
+    "hhb_death_date",
+    "hhb_relation_id",
+    "hhb_relation_name",
+    "hhb_relation_type",
+]
+
 
 def __get_hhb_ids(json: List[Dict[str, Any]]) -> Optional[str]:
     """Extracts hhb_ids from json data."""
@@ -140,6 +162,9 @@ def get_hist_hub_entries(config: Dict[str, str]) -> None:
     setup_logging_to_file("hist-hub.log")
     df_updates = pd.read_csv(config["HLS_UPDATE_CSV_PATH"], sep=";")
     df_new = pd.read_csv(config["HLS_NEW_CSV_PATH"], sep=";")
+
+    df_updates[COLUMNS] = None
+    df_new[COLUMNS] = None
 
     __retrieve_hhb_data(df_updates, "Update Entries")
     __retrieve_hhb_data(df_new, "New Entries")

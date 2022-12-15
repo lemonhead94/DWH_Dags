@@ -6,6 +6,7 @@ from functools import partial
 from hls import (
     clean_flair,
     clean_hls_and_hhb,
+    clean_up_temp,
     flair_tagger,
     get_hist_hub_entries,
     gmaps_geocode,
@@ -56,6 +57,10 @@ with DAG(
         task_id="update_mv_task",
         python_callable=partial(update_mv, config=CONFIG),
     )
+    clean_up_temp_files_task = PythonOperator(
+        task_id="clean_up_temp_files_task",
+        python_callable=clean_up_temp,
+    )
 
     (
         scrape_hls_task
@@ -66,4 +71,5 @@ with DAG(
         >> gmaps_task
         >> push_to_postgres_task
         >> update_mv_task
+        >> clean_up_temp_files_task
     )
