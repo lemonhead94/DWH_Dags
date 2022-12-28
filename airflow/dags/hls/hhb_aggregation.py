@@ -6,16 +6,6 @@ import requests
 from hls.utility_logging import log_exception, setup_logging_to_file
 
 COLUMNS = [
-    "HLS_ID",
-    "HLS_URL",
-    "first_name",
-    "last_name",
-    "birth_date",
-    "death_date",
-    "text",
-    "published",
-    "author",
-    "translator",
     "hhb_ids",
     "hhb_forename",
     "hhb_surname",
@@ -133,6 +123,12 @@ def __retrieve_hhb_data(df: pd.DataFrame, type: str) -> pd.DataFrame:
         print(f"Processing {type} {index + 1} out of {len(df)}")
         data = {"version": 1, "external_ids.external_id": row.HLS_ID}
         response = requests.post(url, json=data, headers=headers)
+        if response.status_code != 200:
+            print(
+                f"Could not retrieve data for {row.HLS_ID} from histhub. Status code: {response.status_code}"
+            )
+            print(row)
+            continue
         json = response.json()
 
         # backup in case there is a connection error
@@ -163,8 +159,9 @@ def get_hist_hub_entries(config: Dict[str, str]) -> None:
     df_updates = pd.read_csv(config["HLS_UPDATE_CSV_PATH"], sep=";")
     df_new = pd.read_csv(config["HLS_NEW_CSV_PATH"], sep=";")
 
-    df_updates[COLUMNS] = None
-    df_new[COLUMNS] = None
+    # add new empy columns since these columns are expected in the next task
+    df_updates[COLUMNS] = pd.Series(dtype=pd.StringDtype())
+    df_new[COLUMNS] = pd.Series(dtype=pd.StringDtype())
 
     __retrieve_hhb_data(df_updates, "Update Entries")
     __retrieve_hhb_data(df_new, "New Entries")

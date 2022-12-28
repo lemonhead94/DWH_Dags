@@ -16,7 +16,7 @@ from hls import (
 )
 
 from airflow.models import DAG
-from airflow.operators.python import PythonOperator
+from airflow.operators.python import PythonOperator, ShortCircuitOperator
 
 with DAG(
     dag_id="hls_dag",
@@ -28,7 +28,7 @@ with DAG(
     with open(config_path) as f:
         CONFIG = json.load(f)
 
-    scrape_hls_task = PythonOperator(
+    scrape_hls_task = ShortCircuitOperator(
         task_id="scrape_hls_task", python_callable=partial(scrape_hls, config=CONFIG)
     )
     aggregate_hhb_task = PythonOperator(

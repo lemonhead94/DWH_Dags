@@ -5,27 +5,6 @@ from flair.data import Sentence, Span
 from flair.models import SequenceTagger
 
 COLUMNS = [
-    "HLS_ID",
-    "HLS_URL",
-    "first_name",
-    "last_name",
-    "birth_date",
-    "death_date",
-    "text",
-    "published",
-    "author",
-    "translator",
-    "hhb_ids",
-    "hhb_forename",
-    "hhb_surname",
-    "hhb_sex",
-    "hhb_birth_date",
-    "hhb_death_date",
-    "hhb_relation_id",
-    "hhb_relation_name",
-    "hhb_relation_type",
-    "cleaned_birth_date_formatted",
-    "cleaned_death_date_formatted",
     "flair_locations",
     "flair_person",
     "flair_organizations",
@@ -62,8 +41,9 @@ def flair_tagger(config: Dict[str, str]) -> None:
     df_new = pd.read_csv(
         config["CLEANED_NEW_CSV_PATH"], dtype={"hhb_ids": str}, sep=";"
     )
-    df_updates[COLUMNS] = None
-    df_new[COLUMNS] = None
+    # add new empy columns since these columns are expected in the next task
+    df_updates[COLUMNS] = pd.Series(dtype=pd.StringDtype())
+    df_new[COLUMNS] = pd.Series(dtype=pd.StringDtype())
 
     for index, hls_entry in df_updates.iterrows():
         spans = __predict_sentence(tagger, hls_entry)
